@@ -1,12 +1,13 @@
 #ifndef _DATA_STRUCTURES_H_
 #define _DATA_STRUCTURES_H_
 
+
 //################################################################################
 //###############################Double Link List#####################################
 //################################################################################
 
 template<class T>
-class DoubleLinkList
+class list
 {
 private:
 	struct node;
@@ -15,21 +16,17 @@ private:
 	node *mp_current;
 	node *mp_free_list;
 	unsigned m_length;
-	unsigned short m_year;
-	unsigned short m_month;
-	unsigned short m_day;
-	unsigned short m_id;
 public:
 	class iterator;
-	DoubleLinkList(void):mp_head(NULL),mp_current(NULL),mp_tail(NULL),mp_free_list(NULL),
-									m_length(0),m_year(0),m_month(0),m_day(0),m_id(0)											{init();}
-	~DoubleLinkList(void)																															{clear();}
+	list(void):mp_head(NULL),mp_current(NULL),mp_tail(NULL),mp_free_list(NULL),m_length(0)			{init();}
+	~list(void)																																				{clear();}
 	void init(void);
 	void clear(void);
 	unsigned size(void)const																														{return m_length;}
 	iterator end(void)const																															{return mp_tail;}
 	iterator begin(void)const																														{return mp_head;}
 	T &back(void)const																																{return mp_current->m_data;}
+	T const_back(void)const																														{return mp_current->m_data;}
 	node *free_node(node *free_node)
 	{
 		node *tmp;
@@ -104,7 +101,7 @@ public:
 			return position;
 		}
 	}
-
+	void set_current(iterator current)																												{mp_current = current.mp_node;}
 	void pop_front(void)																																	{erase(begin());}
 	void pop_back(void)																																{erase(end());}
 	void set_id(unsigned short year, unsigned short month, unsigned short day, unsigned short id);
@@ -115,7 +112,7 @@ public:
 };
 
 template<class T>
-struct DoubleLinkList<T>::node
+struct list<T>::node
 {
 	T m_data;
 	node *mp_next;
@@ -124,7 +121,7 @@ struct DoubleLinkList<T>::node
 };
 
 template<class T>
-class DoubleLinkList<T>::iterator
+class list<T>::iterator
 {
 protected:
 	node *mp_node;
@@ -138,18 +135,18 @@ public:
 	iterator operator--(int)																														{iterator temp = *this;--*this;return temp;}
 	bool operator==(iterator tmp)																											{return tmp.mp_node == mp_node;}
 	bool operator!=(iterator tmp)																											{return tmp.mp_node != mp_node;}
-	friend class DoubleLinkList<T>;
+	friend class list<T>;
 };
 
 template<class T>
-void DoubleLinkList<T>::init(void)
+void list<T>::init(void)
 {
 }
 
 template<class T>
-void DoubleLinkList<T>::clear(void)
+void list<T>::clear(void)
 {
-	DoubleLinkList<T>::iterator pi = begin();
+	list<T>::iterator pi = begin();
 	while(pi != NULL)
 	{
 		pi = erase(pi);
@@ -161,7 +158,7 @@ void DoubleLinkList<T>::clear(void)
 }
 
 template<class T>
-void DoubleLinkList<T>::put_node(node *erase)
+void list<T>::put_node(node *erase)
 {
 	erase->mp_next = mp_free_list;
 	erase->mp_prev = NULL;
@@ -170,7 +167,7 @@ void DoubleLinkList<T>::put_node(node *erase)
 
 
 template<class T>
-void DoubleLinkList<T>::insert(iterator position,const T &data)
+void list<T>::insert(iterator position,const T &data)
 {
 	node *tmp = get_node();
 	tmp->m_data = data;
@@ -184,7 +181,7 @@ void DoubleLinkList<T>::insert(iterator position,const T &data)
 }
 
 template<class T>
-void DoubleLinkList<T>:: push_front(const T &data)
+void list<T>:: push_front(const T &data)
 {
 	mp_current = get_node();
 	(*mp_current).m_data = data;
@@ -204,7 +201,7 @@ void DoubleLinkList<T>:: push_front(const T &data)
 }
 	
 template<class T>
-void DoubleLinkList<T>:: push_back(const T &data)
+void list<T>:: push_back(const T &data)
 {
 	mp_current = get_node();
 	(*mp_current).m_data = data;
@@ -222,15 +219,5 @@ void DoubleLinkList<T>:: push_back(const T &data)
 		mp_tail = mp_current;
 	}
 }
-
-template<class T>
-void DoubleLinkList<T>::set_id(unsigned short year, unsigned short month, unsigned short day, unsigned short id)																												
-{
-	m_year = year;
-	m_month = month;
-	m_day = day;
-	m_id = id;
-}
-
 
 #endif //_DATA_STRUCTURES_H_
