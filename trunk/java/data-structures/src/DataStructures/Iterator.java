@@ -1,22 +1,24 @@
-public class Iterator<T>
+package DataStructures;
+
+public class Iterator<T> 
 {
 	private Node<T> m_node;
-	public Iterator()
+	Iterator()
 	{
 		m_node = new Node<T>();
 	}
-	public Iterator(Node<T> node)
+	Iterator(Node<T> node)
 	{
 		m_node = node;
 	}
-	public Boolean has_next()
+	Boolean has_next()
 	{
-		if(m_node.get_next() != null)
+		if(m_node != null)
 			return true;
 		else
 			return false;
 	}
-	public Boolean has_prev()
+	Boolean has_prev()
 	{
 		if(m_node.get_prev() != null)
 			return true;
@@ -27,10 +29,7 @@ public class Iterator<T>
 	{
 		T tmp = null;
 		tmp = m_node.get_data();
-		if(m_node.get_next() != null)
-		{
-			m_node = m_node.get_next();
-		}
+		m_node = m_node.get_next();
 		return tmp;
 	}
 	public T prev()
@@ -43,11 +42,11 @@ public class Iterator<T>
 		}
 		return tmp;
 	}
-	public void set_node(Node<T> node)
+	void set_node(Node<T> node)
 	{
 		m_node = node;
 	}
-	public Node<T> get_node()
+	Node<T> get_node()
 	{
 		return m_node;
 	}
@@ -58,12 +57,20 @@ public class Iterator<T>
 		else
 			return false;
 	}
-	public Node<T> get_next()
+	Node<T> get_next()
 	{
 		return m_node.get_next();
 	}
-	public Node<T> get_prev()
+	Node<T> get_prev()
 	{
 		return m_node.get_prev();
+	}
+	public T back()
+	{
+		return m_node.get_data();
+	}
+	public void modify(T data)
+	{
+		m_node.set_data(data);
 	}
 }
