@@ -1,14 +1,15 @@
-package datastructures;
-public class stack <T>
+package DataStructures;
+
+public class Stack <T>
 {
 	private int m_max_size;
 	private int m_top;
-	private list<T> m_data;
-	public stack()
+	private List<T> m_data;
+	public Stack()
 	{
 		m_top = -1;
 		m_max_size = 0;
-		m_data = new list<T>();
+		m_data = new List<T>();
 	}
 	public void set_max_size(int new_size)
 	{
@@ -17,14 +18,14 @@ public class stack <T>
 		else
 			return;
 	}
-	public stack(int max_size)//立刻預設最大值的建構子
+	public Stack(int max_size)//立刻預設最大值的建構子
 	{
 		m_top = -1;
 		if(max_size <= 0)
 			m_max_size = 0;
 		else
 			m_max_size = max_size - 1;
-		m_data = new list<T>();
+		m_data = new List<T>();
 	}
 	public boolean is_empty()//stack 是否是空的
 	{
